@@ -25,6 +25,7 @@ This project shows how to control a DC motor using an ESP32 and an L298N motor d
 ## How to Use
 Upload the code to your ESP32. The motor will run forward, stop, run backward, stop, then increase speed forward gradually. Open Serial Monitor at 115200 baud to see status messages.
 
+
 // Motor A
 int motor1Pin1 = 27; 
 int motor1Pin2 = 26; 
@@ -64,27 +65,12 @@ void loop() {
   digitalWrite(motor1Pin2, LOW);
   delay(1000);
 
-  // Move DC motor backwards at maximum speed
-  Serial.println("Moving Backwards");
-  digitalWrite(motor1Pin1, HIGH);
-  digitalWrite(motor1Pin2, LOW); 
-  delay(2000);
-
-  // Stop the DC motor
-  Serial.println("Motor stopped");
-  digitalWrite(motor1Pin1, LOW);
-  digitalWrite(motor1Pin2, LOW);
-  delay(1000);
+  
 
   // Move DC motor forward with increasing speed
   digitalWrite(motor1Pin1, HIGH);
   digitalWrite(motor1Pin2, LOW);
-  while (dutyCycle <= 255){
+  while (dutyCycle){
     ledcWrite(enable1Pin, dutyCycle);   
-    Serial.print("Forward with duty cycle: ");
-    Serial.println(dutyCycle);
-    dutyCycle = dutyCycle + 5;
-    delay(500);
   }
-  dutyCycle = 200;
 }
